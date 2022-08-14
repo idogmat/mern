@@ -1,11 +1,17 @@
-import React,{useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useHttp} from "../hooks/http.hook";
+import {useMessage} from "../hooks/message.hook";
 export const AuthPage =()=>{
-    const {loading,error,request} = useHttp()
+    const message=useMessage()
+    const {loading,error,request,clearError} = useHttp()
     const [form,setForm]= useState({
         email:'',
         password:''
     })
+    useEffect(()=>{
+    message(error)
+        clearError()
+    },[error,message,clearError])
     const changeHandler = event =>{
         setForm({...form,[event.target.name]:event.target.value})
     }
@@ -13,6 +19,15 @@ export const AuthPage =()=>{
         console.log(form)
         try{
             const data = await request('api/auth/register','POST',{...form})
+            console.log(data)
+        }catch(e){
+
+        }
+    }
+    const loginHandler = async ()=>{
+        console.log(form)
+        try{
+            const data = await request('api/auth/login','POST',{...form})
             console.log(data)
         }catch(e){
 
@@ -29,7 +44,7 @@ export const AuthPage =()=>{
                             <div className="input-field">
                                 <input  id="email"
                                         name="email"
-                                        type="text"
+                                        type="email"
                                         className="validate white-text"
                                         onChange={changeHandler}/>
                                     <label htmlFor="email" className="white-text">Email</label>
@@ -37,7 +52,7 @@ export const AuthPage =()=>{
                             <div className="input-field">
                                 <input  id="password"
                                         name="password"
-                                        type="text"
+                                        type="password"
                                         className="validate white-text"
                                         onChange={changeHandler}/>
                                     <label htmlFor="password" className="white-text">Password</label>
@@ -46,6 +61,7 @@ export const AuthPage =()=>{
                         <div className="card-action">
                             <button
                                 className='btn yellow darken-4'
+                                onClick={loginHandler}
                                 disabled={loading}
                             >Login</button>
                             <button

@@ -12,8 +12,7 @@ async function start(){
     try {
         await mongoose.connect(config.get('mongoUri'),{
         useNewUrlParser:true,
-        useCreateIndex:true,
-        useUnifiedTopology:true
+        useUnifiedTopology:true,
         })
     } catch(e){
         console.log('Server Error', e.message)
