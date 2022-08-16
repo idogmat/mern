@@ -55,15 +55,17 @@ router.post('/login',
             if(!user){
                 return res.status(400).json({message:'this user not find'})
             }
+
             const isMatch = await bcrypt.compare(password,user.password)
-            if(isMatch){
-                res.status(400).json({message:'this user login fail'})
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Неверный пароль, попробуйте снова' })
             }
             const token = jwt.sign(
                 {userId: user.id},
-                config.get('jwtSecret'),
+                'jwtSecret',
             {expiresIn:'1h'}
             )
+            console.log(token)
             res.json({token,userId:user.id})
         } catch(e){
             res.status(500).json({message:'something wrong'})

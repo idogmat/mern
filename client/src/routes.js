@@ -15,8 +15,8 @@ if(isAuthenticated){
             <Route path='/detail/:id' element={<DetailPage/>}>
             </Route>
             <Route
-                path="*"
-                element={<Navigate to="/" replace />}
+                path="/"
+                element={<Navigate to="/create" replace />}
             />
         </Routes>
     )
