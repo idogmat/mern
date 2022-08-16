@@ -37,8 +37,8 @@ router.post('/register',
 })
 router.post('/login',
     [
-        check('email','uncorrect').isEmail(),
-        check('password','uncorrect').isLength({min:6})
+        check('email','uncorrect').normalizeEmail().isEmail(),
+        check('password','uncorrect').exists()
     ],
     async (req,res)=>{
         try{
@@ -53,20 +53,23 @@ router.post('/login',
             const {email,password}=req.body
             const user = await User.findOne({email})
             if(!user){
-                return res.status(400).json({message:'this user not find'})
+                return res.status(400).json({message:'Пользователь не найден'})
             }
             const isMatch = await bcrypt.compare(password,user.password)
-            if(isMatch){
-                res.status(400).json({message:'this user login fail'})
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Неверный пароль, попробуйте снова' })
             }
+            console.log('norm')
             const token = jwt.sign(
-                {userId: user.id},
-                config.get('jwtSecret'),
-            {expiresIn:'1h'}
+                { userId: user.id },
+                'jwtSecret',
+                { expiresIn: '1d' }
             )
-            res.json({token,userId:user.id})
+            console.log(token)
+            res.json({ token, userId: user.id })
         } catch(e){
-            res.status(500).json({message:'something wrong'})
+            console.log(e)
+            res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' })
         }
 })
 

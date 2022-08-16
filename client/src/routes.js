@@ -8,27 +8,21 @@ export const useRoutes = isAuthenticated=>{
 if(isAuthenticated){
     return(
         <Routes>
+            <Route path='/' element={<Navigate to="/links" replace={true}/>}/>
             <Route path='/links' element={<LinksPage/>}>
             </Route>
             <Route path='/create' element={<CreatePage/>}>
             </Route>
             <Route path='/detail/:id' element={<DetailPage/>}>
             </Route>
-            <Route
-                path="*"
-                element={<Navigate to="/" replace />}
-            />
         </Routes>
     )
 }
-return (
+return(
     <Routes>
         <Route path='/' element={<AuthPage/>}>
         </Route>
-        <Route
-            path="*"
-            element={<Navigate to="/" replace />}
-        />
+        <Route path='*' element={<Navigate to="/" replace={true}/>}/>
     </Routes>
 )
 }
