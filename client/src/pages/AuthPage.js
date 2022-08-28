@@ -20,25 +20,24 @@ export const AuthPage =()=>{
     }, [])
     const changeHandler = event =>{
         setForm({...form,[event.target.name]:event.target.value})
+
     }
     const registerHandler = async ()=>{
-        console.log(form)
+
         try{
             const data = await request('api/auth/register','POST',{...form})
             console.log(data)
         }catch(e){
-
+            console.log(e)
         }
     }
     const loginHandler = async ()=>{
-        console.log(form)
+
         try{
             const data = await request('api/auth/login','POST',{...form})
-            console.log(data.token)
-            console.log(data.userId)
             auth.login(data.token,data.userId)
         }catch(e){
-
+            console.log(e)
         }
     }
     return (
