@@ -2,7 +2,9 @@ import React, {useContext, useEffect, useState} from "react";
 import {useHttp} from "../hooks/http.hook";
 import {useMessage} from "../hooks/message.hook";
 import {AuthContext} from "../context/AuthContext";
+import {useNavigate} from "react-router-dom";
 export const AuthPage =()=>{
+    const history = useNavigate()
     const auth = useContext(AuthContext)
     const message=useMessage()
     const {loading,error,request,clearError} = useHttp()
@@ -27,6 +29,7 @@ export const AuthPage =()=>{
         try{
             const data = await request('api/auth/register','POST',{...form})
             console.log(data)
+
         }catch(e){
             console.log(e)
         }
