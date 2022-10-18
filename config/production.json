@@ -1,5 +1,5 @@
 {
-  "port": 5000,
+  "port": 80,
   "mongoUri": "mongodb+srv://Jack:1885598@cluster0.rtp1ab6.mongodb.net/?retryWrites=true&w=majority",
   "jwtSecret": "askUrMom"
 }

@@ -4,7 +4,7 @@
   "description": "react mongo node",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=prodaction node app.js",
+    "start": "cross-env NODE_ENV=production node app.js",
     "server": "nodemon app.js ",
     "client": "npm run start --prefix client",
     "client:install": "npm run install --prefix client",
